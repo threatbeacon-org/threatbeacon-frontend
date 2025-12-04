@@ -55,11 +55,11 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className="min-h-screen bg-slate-950">
-      <Navbar />
-      <div className="flex">
-        <Sidebar />
-        <main className="flex-1 p-6">{children}</main>
+    <div className="min-h-screen bg-slate-950 flex">
+      <Sidebar />
+      <div className="flex-1 flex flex-col">
+        <Navbar />
+        <main className="flex-1 p-6 overflow-auto">{children}</main>
       </div>
     </div>
   );

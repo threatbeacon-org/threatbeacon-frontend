@@ -2,8 +2,7 @@
 
 /**
  * IncidentTable Component
- * Displays list of incidents in a table format
- * Highlights critical/high severity incidents
+ * Active Incidents table matching the design image exactly
  */
 
 import React from 'react';
@@ -45,6 +44,10 @@ function getStatusVariant(
   }
 }
 
+function formatIncidentId(id: number): string {
+  return `#INC-${String(id).padStart(3, '0')}`;
+}
+
 export default function IncidentTable() {
   const { incidents, isLoading, isError } = useIncidents();
 
@@ -71,87 +74,82 @@ export default function IncidentTable() {
     );
   }
 
-  if (incidents.length === 0) {
-    return (
-      <div className="bg-slate-800 border border-slate-700 rounded-lg p-6">
-        <h3 className="text-xl font-semibold text-white mb-4">Active Incidents</h3>
-        <p className="text-slate-400">No incidents found</p>
-      </div>
-    );
-  }
-
   return (
     <div className="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden">
+      {/* Header */}
       <div className="p-6 border-b border-slate-700">
-        <h3 className="text-xl font-semibold text-white">Active Incidents</h3>
-        <p className="text-sm text-slate-400 mt-1">
-          {incidents.length} incident{incidents.length !== 1 ? 's' : ''} detected
-        </p>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-2 h-2 bg-cyan-500 rounded-full"></div>
+            <h3 className="text-lg font-semibold text-white">Active Incidents</h3>
+            <Badge variant="neutral" size="sm" className="bg-slate-700/50 text-slate-300 border-slate-600/50">
+              {incidents.length} TOTAL
+            </Badge>
+          </div>
+          <div className="text-xs text-slate-400 font-technical">
+            Auto-refresh: 5s
+          </div>
+        </div>
       </div>
 
+      {/* Table */}
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead className="bg-slate-900/50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-400 uppercase tracking-wider font-technical">
                 ID
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">
-                Type
+                TYPE
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">
-                Severity
+                SEVERITY
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">
-                Status
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">
-                Created At
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">
-                Actions
+                STATUS
               </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-700">
-            {incidents.map((incident) => (
-              <tr
-                key={incident.id}
-                className="hover:bg-slate-900/50 transition-colors"
-              >
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className="text-sm font-mono text-cyan-400">
-                    #{incident.id}
-                  </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className="text-sm text-white">{incident.type}</span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <Badge variant={getSeverityVariant(incident.severity)}>
-                    {incident.severity}
-                  </Badge>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <Badge variant={getStatusVariant(incident.status)}>
-                    {incident.status.replace('_', ' ')}
-                  </Badge>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className="text-sm text-slate-400 font-mono">
-                    {new Date(incident.createdAt).toLocaleString()}
-                  </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <Link
-                    href={`/incidents/${incident.id}`}
-                    className="text-cyan-400 hover:text-cyan-300 text-sm font-medium transition-colors"
-                  >
-                    View Details →
-                  </Link>
+            {incidents.length === 0 ? (
+              <tr>
+                <td colSpan={4} className="px-6 py-8 text-center text-slate-400">
+                  No incidents found
                 </td>
               </tr>
-            ))}
+            ) : (
+              incidents.map((incident) => (
+                <tr
+                  key={incident.id}
+                  className="hover:bg-slate-900/50 transition-colors cursor-pointer"
+                >
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <Link
+                      href={`/incidents/${incident.id}`}
+                      className="text-sm font-technical text-cyan-400 hover:text-cyan-300"
+                    >
+                      {formatIncidentId(incident.id)}
+                    </Link>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className="text-sm text-white font-medium">
+                      {incident.type.toUpperCase()}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <Badge variant={getSeverityVariant(incident.severity)}>
+                      {incident.severity}
+                    </Badge>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <Badge variant={getStatusVariant(incident.status)}>
+                      {incident.status === 'IN_PROGRESS' ? 'INVESTIGATING' : incident.status}
+                    </Badge>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

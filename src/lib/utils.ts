@@ -2,6 +2,16 @@
  * Utility functions
  */
 
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+/**
+ * Utility function to merge Tailwind CSS classes
+ */
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
 /**
  * Formats a date string to a readable format
  */
@@ -42,4 +52,5 @@ export function truncate(str: string, maxLength: number): string {
   if (str.length <= maxLength) return str;
   return str.slice(0, maxLength - 3) + '...';
 }
+
 

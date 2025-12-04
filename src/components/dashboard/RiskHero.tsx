@@ -2,56 +2,53 @@
 
 /**
  * RiskHero Component
- * Prominent visual indicator for global risk status
- * Displays risk level with color-coded styling
+ * Global Risk Level display matching the design image exactly
  */
 
 import React from 'react';
 import { useRiskStatus } from '@/hooks/useRiskStatus';
+import { useIncidents } from '@/hooks/useIncidents';
 import type { RiskLevel } from '@/lib/api/types';
-import Badge from '@/components/ui/Badge';
+import MuteBuzzerButton from './MuteBuzzerButton';
 
 function getRiskLevelConfig(level: RiskLevel) {
   switch (level) {
     case 'NORMAL':
       return {
-        color: 'bg-green-600',
+        iconBg: 'bg-green-600',
+        icon: '✓',
         textColor: 'text-green-400',
-        bgGlow: 'bg-green-600/20',
         label: 'NORMAL',
-        description: 'All systems operating normally',
       };
     case 'SUSPICIOUS':
       return {
-        color: 'bg-orange-600',
+        iconBg: 'bg-orange-600',
+        icon: '⚠️',
         textColor: 'text-orange-400',
-        bgGlow: 'bg-orange-600/20',
         label: 'SUSPICIOUS',
-        description: 'Unusual activity detected',
       };
     case 'CRITICAL':
       return {
-        color: 'bg-red-600',
+        iconBg: 'bg-red-600',
+        icon: '🛡️',
         textColor: 'text-red-400',
-        bgGlow: 'bg-red-600/20',
-        label: 'CRITICAL',
-        description: 'Immediate attention required',
+        label: 'CRITICAL THREAT',
       };
     default:
       return {
-        color: 'bg-slate-600',
+        iconBg: 'bg-slate-600',
+        icon: '?',
         textColor: 'text-slate-400',
-        bgGlow: 'bg-slate-600/20',
         label: 'UNKNOWN',
-        description: 'Status unknown',
       };
   }
 }
 
 export default function RiskHero() {
-  const { riskStatus, isLoading, isError } = useRiskStatus();
+  const { riskStatus, isLoading: isLoadingRisk, isError: isErrorRisk } = useRiskStatus();
+  const { incidents, isLoading: isLoadingIncidents } = useIncidents();
 
-  if (isLoading) {
+  if (isLoadingRisk) {
     return (
       <div className="bg-slate-800 border border-slate-700 rounded-lg p-8 animate-pulse">
         <div className="h-8 bg-slate-700 rounded w-48 mb-4"></div>
@@ -60,7 +57,7 @@ export default function RiskHero() {
     );
   }
 
-  if (isError || !riskStatus) {
+  if (isErrorRisk || !riskStatus) {
     return (
       <div className="bg-slate-800 border border-red-700 rounded-lg p-8">
         <h2 className="text-2xl font-bold text-red-400 mb-2">Error Loading Risk Status</h2>
@@ -71,52 +68,73 @@ export default function RiskHero() {
 
   const config = getRiskLevelConfig(riskStatus.level);
 
-  return (
-    <div
-      className={`
-        relative overflow-hidden rounded-lg p-8 border-2
-        ${config.bgGlow} border-slate-700
-        transition-all duration-500
-      `}
-    >
-      {/* Animated background glow for critical status */}
-      {riskStatus.level === 'CRITICAL' && (
-        <div className="absolute inset-0 bg-red-600/10 animate-pulse"></div>
-      )}
+  // Calculate statistics from incidents
+  const activeCount = incidents.length;
+  const criticalCount = incidents.filter((i) => i.severity === 'CRITICAL').length;
+  const suspiciousCount = incidents.filter((i) => 
+    i.severity === 'HIGH' || 
+    i.severity === 'MEDIUM' ||
+    i.type.toLowerCase().includes('suspicious')
+  ).length;
 
-      <div className="relative z-10">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h2 className="text-sm font-medium text-slate-400 uppercase tracking-wider mb-2">
-              Global Risk Status
-            </h2>
-            <div className="flex items-center gap-4">
-              <div
-                className={`
-                  w-16 h-16 rounded-full ${config.color}
-                  shadow-lg ${riskStatus.level === 'CRITICAL' ? 'animate-pulse' : ''}
-                `}
-              ></div>
-              <div>
-                <h1 className={`text-4xl font-bold ${config.textColor} mb-1`}>
-                  {config.label}
-                </h1>
-                <p className="text-slate-400 text-sm">{config.description}</p>
+  return (
+    <div className="bg-slate-800 border border-slate-700 rounded-lg p-8">
+      {/* Header Row */}
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-sm font-medium text-slate-400 uppercase tracking-wider">
+          GLOBAL RISK LEVEL
+        </h2>
+        <div className="text-xs text-slate-500 font-technical">
+          LAST SYNC {new Date(riskStatus.lastUpdated).toLocaleTimeString()}
+        </div>
+      </div>
+
+      {/* Main Display */}
+      <div className="flex items-start gap-6">
+        {/* Large Circular Icon */}
+        <div
+          className={`
+            w-20 h-20 rounded-full ${config.iconBg}
+            flex items-center justify-center
+            flex-shrink-0
+            ${riskStatus.level === 'CRITICAL' ? 'pulse-critical' : ''}
+          `}
+        >
+          <span className="text-4xl text-white">{config.icon}</span>
+        </div>
+
+        {/* Risk Level Text and Stats */}
+        <div className="flex-1">
+          <h1 className={`text-4xl font-bold ${config.textColor} mb-4`}>
+            {config.label}
+          </h1>
+          
+          {/* Statistics Cards */}
+          <div className="flex gap-3 mb-4">
+            <div className="bg-slate-900/50 border border-slate-700 rounded px-4 py-2">
+              <div className="text-2xl font-bold text-white font-technical">
+                {activeCount}
               </div>
+              <div className="text-xs text-slate-400 uppercase">ACTIVE</div>
+            </div>
+            <div className="bg-red-600/20 border border-red-500/30 rounded px-4 py-2">
+              <div className="text-2xl font-bold text-red-400 font-technical">
+                {criticalCount}
+              </div>
+              <div className="text-xs text-red-400 uppercase">CRITICAL</div>
+            </div>
+            <div className="bg-orange-600/20 border border-orange-500/30 rounded px-4 py-2">
+              <div className="text-2xl font-bold text-orange-400 font-technical">
+                {suspiciousCount}
+              </div>
+              <div className="text-xs text-orange-400 uppercase">SUSPICIOUS</div>
             </div>
           </div>
 
-          {riskStatus.buzzerMuted && (
-            <Badge variant="warning" size="md">
-              🔇 Buzzer Muted
-            </Badge>
+          {/* Mute Buzzer Button */}
+          {riskStatus.level !== 'NORMAL' && !riskStatus.buzzerMuted && (
+            <MuteBuzzerButton />
           )}
-        </div>
-
-        <div className="mt-4 pt-4 border-t border-slate-700">
-          <p className="text-xs text-slate-500 font-mono">
-            Last updated: {new Date(riskStatus.lastUpdated).toLocaleString()}
-          </p>
         </div>
       </div>
     </div>

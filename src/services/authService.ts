@@ -14,6 +14,19 @@ export async function validateCredentials(
   username: string,
   password: string
 ): Promise<boolean> {
+  const USE_MOCK_DATA = process.env.NEXT_PUBLIC_USE_MOCK_DATA === 'true' || 
+                        (typeof window !== 'undefined' && !process.env.NEXT_PUBLIC_API_BASE_URL);
+  
+  // In mock mode, accept any credentials
+  if (USE_MOCK_DATA) {
+    const credentials = btoa(`${username}:${password}`);
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('auth_credentials', credentials);
+    }
+    await new Promise(resolve => setTimeout(resolve, 500)); // Simulate API delay
+    return true;
+  }
+  
   try {
     // Temporarily store credentials for the test request
     const credentials = btoa(`${username}:${password}`);

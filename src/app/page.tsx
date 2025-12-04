@@ -1,8 +1,8 @@
 import { redirect } from 'next/navigation';
 
 /**
- * Root page - redirects to overview if authenticated, otherwise to login
+ * Root page - redirects to login first (authentication required)
  */
 export default function HomePage() {
-  redirect('/overview');
+  redirect('/login');
 }

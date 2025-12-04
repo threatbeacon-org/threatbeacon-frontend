@@ -8,7 +8,6 @@
 import React, { useState } from 'react';
 import { muteBuzzer } from '@/services/riskService';
 import { useRiskStatus } from '@/hooks/useRiskStatus';
-import Button from '@/components/ui/Button';
 
 export default function MuteBuzzerButton() {
   const { riskStatus, refresh } = useRiskStatus();
@@ -42,19 +41,14 @@ export default function MuteBuzzerButton() {
   };
 
   return (
-    <div className="flex flex-col gap-2">
-      <Button
-        variant="warning"
-        onClick={handleMute}
-        isLoading={isLoading}
-        disabled={isLoading}
-      >
-        🔇 Mute Buzzer
-      </Button>
-      {error && (
-        <p className="text-sm text-red-400">{error}</p>
-      )}
-    </div>
+    <button
+      onClick={handleMute}
+      disabled={isLoading}
+      className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      <span>🔇</span>
+      <span>MUTE BUZZER</span>
+    </button>
   );
 }
 

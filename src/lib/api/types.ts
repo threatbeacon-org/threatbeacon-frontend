@@ -9,6 +9,9 @@ export interface RiskStatus {
   level: RiskLevel;
   buzzerMuted: boolean;
   lastUpdated: string;
+  activeIncidents?: number;
+  criticalCount?: number;
+  suspiciousCount?: number;
 }
 
 export interface IncidentSummary {
