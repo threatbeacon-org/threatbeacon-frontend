@@ -1,25 +1,66 @@
-import React from "react";
-import type { Metadata } from "next";
-import "../../app/globals.css";
-import Navbar from "@/components/layout/Navbar";
-import Sidebar from "@/components/layout/Sidebar";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Dashboard - Threat Beacon",
-};
+/**
+ * Dashboard Layout
+ * Common layout for all dashboard routes with authentication check
+ */
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+import React, { useEffect, useState } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
+import { isAuthenticated } from '@/lib/api/client';
+import Navbar from '@/components/layout/Navbar';
+import Sidebar from '@/components/layout/Sidebar';
+
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  const [isAuth, setIsAuth] = useState(false);
+
+  useEffect(() => {
+    // Only check authentication on client side
+    const checkAuth = () => {
+      const authenticated = isAuthenticated();
+      setIsAuth(authenticated);
+      setIsCheckingAuth(false);
+
+      if (!authenticated && pathname !== '/login') {
+        router.push('/login');
+      }
+    };
+
+    checkAuth();
+  }, [router, pathname]);
+
+  // Show loading state while checking auth (prevents hydration mismatch)
+  if (isCheckingAuth) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+        <div className="text-slate-400">Loading...</div>
+      </div>
+    );
+  }
+
+  // If not authenticated, show redirect message (will redirect via useEffect)
+  if (!isAuth) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+        <div className="text-slate-400">Redirecting to login...</div>
+      </div>
+    );
+  }
+
   return (
-    <html>
-      <body>
-        <div style={{ display: "flex", minHeight: "100vh" }}>
-          <Sidebar />
-          <main style={{ flex: 1 }}>
-            <Navbar />
-            <div style={{ padding: 16 }}>{children}</div>
-          </main>
-        </div>
-      </body>
-    </html>
+    <div className="min-h-screen bg-slate-950">
+      <Navbar />
+      <div className="flex">
+        <Sidebar />
+        <main className="flex-1 p-6">{children}</main>
+      </div>
+    </div>
   );
 }
