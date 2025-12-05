@@ -81,41 +81,41 @@ export default function IncidentDetailPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
+    <div className="space-y-4 sm:space-y-6 w-full">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
+        <div className="w-full sm:w-auto">
           <Link href="/overview">
-            <Button variant="ghost" size="sm">← Back to Overview</Button>
+            <Button variant="ghost" size="sm" className="text-xs sm:text-sm">← Back to Overview</Button>
           </Link>
-          <h1 className="text-3xl font-bold text-white mt-4">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-2 sm:mt-4 break-words">
             Incident #{incident.id}
           </h1>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* Incident Details */}
         <Card title="Incident Details">
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             <div>
-              <label className="text-sm font-medium text-slate-400">Type</label>
-              <p className="text-white mt-1">{incident.type}</p>
+              <label className="text-xs sm:text-sm font-medium text-slate-400">Type</label>
+              <p className="text-white mt-1 text-sm sm:text-base break-words">{incident.type}</p>
             </div>
 
-            <div className="flex gap-4">
-              <div>
-                <label className="text-sm font-medium text-slate-400">Severity</label>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <div className="flex-1">
+                <label className="text-xs sm:text-sm font-medium text-slate-400">Severity</label>
                 <div className="mt-1">
-                  <Badge variant={getSeverityVariant(incident.severity)}>
+                  <Badge variant={getSeverityVariant(incident.severity)} size="sm" className="text-xs sm:text-sm">
                     {incident.severity}
                   </Badge>
                 </div>
               </div>
 
-              <div>
-                <label className="text-sm font-medium text-slate-400">Status</label>
+              <div className="flex-1">
+                <label className="text-xs sm:text-sm font-medium text-slate-400">Status</label>
                 <div className="mt-1">
-                  <Badge variant={getStatusVariant(incident.status)}>
+                  <Badge variant={getStatusVariant(incident.status)} size="sm" className="text-xs sm:text-sm">
                     {incident.status.replace('_', ' ')}
                   </Badge>
                 </div>
@@ -123,16 +123,16 @@ export default function IncidentDetailPage() {
             </div>
 
             <div>
-              <label className="text-sm font-medium text-slate-400">Event Count</label>
-              <p className="text-white mt-1 font-mono">{incident.eventCount}</p>
+              <label className="text-xs sm:text-sm font-medium text-slate-400">Event Count</label>
+              <p className="text-white mt-1 font-mono text-sm sm:text-base">{incident.eventCount}</p>
             </div>
 
             {incident.mainIps && incident.mainIps.length > 0 && (
               <div>
-                <label className="text-sm font-medium text-slate-400">Main IPs</label>
+                <label className="text-xs sm:text-sm font-medium text-slate-400">Main IPs</label>
                 <div className="mt-1 space-y-1">
                   {incident.mainIps.map((ip, idx) => (
-                    <p key={idx} className="text-cyan-400 font-mono text-sm">
+                    <p key={idx} className="text-cyan-400 font-mono text-xs sm:text-sm break-all">
                       {ip}
                     </p>
                   ))}
@@ -142,10 +142,10 @@ export default function IncidentDetailPage() {
 
             {incident.countries && incident.countries.length > 0 && (
               <div>
-                <label className="text-sm font-medium text-slate-400">Countries</label>
+                <label className="text-xs sm:text-sm font-medium text-slate-400">Countries</label>
                 <div className="mt-1 flex flex-wrap gap-2">
                   {incident.countries.map((country, idx) => (
-                    <Badge key={idx} variant="neutral" size="sm">
+                    <Badge key={idx} variant="neutral" size="sm" className="text-[10px] sm:text-xs">
                       {country}
                     </Badge>
                   ))}
@@ -153,17 +153,17 @@ export default function IncidentDetailPage() {
               </div>
             )}
 
-            <div className="pt-4 border-t border-slate-700 space-y-2">
+            <div className="pt-3 sm:pt-4 border-t border-slate-700 space-y-2">
               <div>
-                <label className="text-sm font-medium text-slate-400">Created At</label>
-                <p className="text-slate-300 font-mono text-sm mt-1">
+                <label className="text-xs sm:text-sm font-medium text-slate-400">Created At</label>
+                <p className="text-slate-300 font-mono text-xs sm:text-sm mt-1 break-words">
                   {new Date(incident.createdAt).toLocaleString()}
                 </p>
               </div>
 
               <div>
-                <label className="text-sm font-medium text-slate-400">Last Updated</label>
-                <p className="text-slate-300 font-mono text-sm mt-1">
+                <label className="text-xs sm:text-sm font-medium text-slate-400">Last Updated</label>
+                <p className="text-slate-300 font-mono text-xs sm:text-sm mt-1 break-words">
                   {new Date(incident.updatedAt).toLocaleString()}
                 </p>
               </div>

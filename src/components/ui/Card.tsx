@@ -16,18 +16,18 @@ export default function Card({ children, className = '', title, subtitle }: Card
   return (
     <div
       className={`
-        bg-slate-800 border border-slate-700 rounded-lg p-6
-        shadow-lg
+        bg-slate-800 border border-slate-700 rounded-lg p-3 sm:p-4 md:p-6
+        shadow-lg w-full
         ${className}
       `}
     >
       {(title || subtitle) && (
-        <div className="mb-4">
+        <div className="mb-3 sm:mb-4">
           {title && (
-            <h3 className="text-xl font-semibold text-white mb-1">{title}</h3>
+            <h3 className="text-base sm:text-lg md:text-xl font-semibold text-white mb-1 break-words">{title}</h3>
           )}
           {subtitle && (
-            <p className="text-sm text-slate-400">{subtitle}</p>
+            <p className="text-xs sm:text-sm text-slate-400 break-words">{subtitle}</p>
           )}
         </div>
       )}
@@ -35,4 +35,5 @@ export default function Card({ children, className = '', title, subtitle }: Card
     </div>
   );
 }
+
 

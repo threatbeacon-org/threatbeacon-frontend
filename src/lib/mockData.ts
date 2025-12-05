@@ -84,3 +84,4 @@ export const mockIncidentInsight: IncidentInsight = {
   confidence: 94,
 };
 
+

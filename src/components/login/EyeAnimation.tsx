@@ -88,3 +88,4 @@ export default function EyeAnimation({ isPasswordFocused, hasPassword }: EyeAnim
   );
 }
 
+

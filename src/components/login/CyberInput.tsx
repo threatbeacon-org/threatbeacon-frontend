@@ -21,12 +21,12 @@ export const CyberInput = forwardRef<HTMLInputElement, CyberInputProps>(
 
     return (
       <motion.div
-        className="relative"
+        className="relative w-full"
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <label className="block text-base font-semibold text-slate-300 uppercase tracking-wider mb-4 font-cyber-body">
+        <label className="block text-xs sm:text-sm md:text-base font-semibold text-slate-300 uppercase tracking-wider mb-2 sm:mb-3 md:mb-4 font-cyber-body">
           {label}
         </label>
         <div className="relative">
@@ -43,13 +43,13 @@ export const CyberInput = forwardRef<HTMLInputElement, CyberInputProps>(
               ref={ref}
               type={inputType}
               className={cn(
-                "cyber-input w-full px-6 py-6",
-                showPasswordToggle && "pr-14",
+                "cyber-input w-full px-4 sm:px-5 md:px-6 py-4 sm:py-5 md:py-6",
+                showPasswordToggle && "pr-10 sm:pr-12 md:pr-14",
                 "bg-slate-800/60 border-2 border-cyan-500/30 rounded-xl",
                 "text-slate-100 placeholder-slate-500",
                 "focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20",
                 "transition-all duration-300",
-                "font-cyber-body text-lg",
+                "font-cyber-body text-sm sm:text-base md:text-lg",
                 className
               )}
               onFocus={() => setIsFocused(true)}
@@ -60,10 +60,11 @@ export const CyberInput = forwardRef<HTMLInputElement, CyberInputProps>(
             {showPasswordToggle && (
               <button
                 type="button"
-                className="absolute right-5 z-10 text-slate-400 hover:text-cyan-400 transition-colors"
+                className="absolute right-3 sm:right-4 md:right-5 z-10 text-slate-400 hover:text-cyan-400 transition-colors p-1"
                 onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
               >
-                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                {showPassword ? <EyeOff size={18} className="sm:w-5 sm:h-5" /> : <Eye size={18} className="sm:w-5 sm:h-5" />}
               </button>
             )}
           </div>

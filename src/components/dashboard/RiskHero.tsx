@@ -78,62 +78,64 @@ export default function RiskHero() {
   ).length;
 
   return (
-    <div className="bg-slate-800 border border-slate-700 rounded-lg p-8">
+    <div className="bg-slate-800 border border-slate-700 rounded-lg p-3 sm:p-4 md:p-6 lg:p-8 w-full">
       {/* Header Row */}
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-sm font-medium text-slate-400 uppercase tracking-wider">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 sm:gap-2 md:gap-0 mb-3 sm:mb-4 md:mb-6">
+        <h2 className="text-[10px] sm:text-xs md:text-sm font-medium text-slate-400 uppercase tracking-wider">
           GLOBAL RISK LEVEL
         </h2>
-        <div className="text-xs text-slate-500 font-technical">
+        <div className="text-[9px] sm:text-xs text-slate-500 font-technical">
           LAST SYNC {new Date(riskStatus.lastUpdated).toLocaleTimeString()}
         </div>
       </div>
 
       {/* Main Display */}
-      <div className="flex items-start gap-6">
+      <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3 sm:gap-4 md:gap-6">
         {/* Large Circular Icon */}
         <div
           className={`
-            w-20 h-20 rounded-full ${config.iconBg}
+            w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full ${config.iconBg}
             flex items-center justify-center
             flex-shrink-0
             ${riskStatus.level === 'CRITICAL' ? 'pulse-critical' : ''}
           `}
         >
-          <span className="text-4xl text-white">{config.icon}</span>
+          <span className="text-2xl sm:text-3xl md:text-4xl text-white">{config.icon}</span>
         </div>
 
         {/* Risk Level Text and Stats */}
-        <div className="flex-1">
-          <h1 className={`text-4xl font-bold ${config.textColor} mb-4`}>
+        <div className="flex-1 w-full min-w-0">
+          <h1 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold ${config.textColor} mb-2 sm:mb-3 md:mb-4 text-center sm:text-left break-words`}>
             {config.label}
           </h1>
           
           {/* Statistics Cards */}
-          <div className="flex gap-3 mb-4">
-            <div className="bg-slate-900/50 border border-slate-700 rounded px-4 py-2">
-              <div className="text-2xl font-bold text-white font-technical">
+          <div className="flex flex-wrap gap-2 sm:gap-3 mb-2 sm:mb-3 md:mb-4 justify-center sm:justify-start">
+            <div className="bg-slate-900/50 border border-slate-700 rounded px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 min-w-[70px] sm:min-w-[80px]">
+              <div className="text-lg sm:text-xl md:text-2xl font-bold text-white font-technical">
                 {activeCount}
               </div>
-              <div className="text-xs text-slate-400 uppercase">ACTIVE</div>
+              <div className="text-[10px] sm:text-xs text-slate-400 uppercase">ACTIVE</div>
             </div>
-            <div className="bg-red-600/20 border border-red-500/30 rounded px-4 py-2">
-              <div className="text-2xl font-bold text-red-400 font-technical">
+            <div className="bg-red-600/20 border border-red-500/30 rounded px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 min-w-[70px] sm:min-w-[80px]">
+              <div className="text-lg sm:text-xl md:text-2xl font-bold text-red-400 font-technical">
                 {criticalCount}
               </div>
-              <div className="text-xs text-red-400 uppercase">CRITICAL</div>
+              <div className="text-[10px] sm:text-xs text-red-400 uppercase">CRITICAL</div>
             </div>
-            <div className="bg-orange-600/20 border border-orange-500/30 rounded px-4 py-2">
-              <div className="text-2xl font-bold text-orange-400 font-technical">
+            <div className="bg-orange-600/20 border border-orange-500/30 rounded px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 min-w-[70px] sm:min-w-[80px]">
+              <div className="text-lg sm:text-xl md:text-2xl font-bold text-orange-400 font-technical">
                 {suspiciousCount}
               </div>
-              <div className="text-xs text-orange-400 uppercase">SUSPICIOUS</div>
+              <div className="text-[10px] sm:text-xs text-orange-400 uppercase">SUSPICIOUS</div>
             </div>
           </div>
 
           {/* Mute Buzzer Button */}
           {riskStatus.level !== 'NORMAL' && !riskStatus.buzzerMuted && (
-            <MuteBuzzerButton />
+            <div className="flex justify-center sm:justify-start">
+              <MuteBuzzerButton />
+            </div>
           )}
         </div>
       </div>

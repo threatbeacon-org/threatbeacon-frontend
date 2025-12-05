@@ -63,16 +63,16 @@ export default function NotificationAlarm() {
   // Render visual alarm indicator
   if (riskStatus?.level === 'CRITICAL' && !riskStatus.buzzerMuted && !isDismissed) {
     return (
-      <div className="fixed top-4 right-4 z-50 animate-bounce">
-        <div className="bg-red-600 text-white px-6 py-3 rounded-lg shadow-2xl border-2 border-red-400 flex items-center gap-3">
-          <span className="text-2xl animate-pulse">🚨</span>
-          <div>
-            <p className="font-bold text-lg">CRITICAL ALERT</p>
-            <p className="text-sm">Immediate action required</p>
+      <div className="fixed top-2 left-2 right-2 sm:top-4 sm:left-auto sm:right-4 z-50 animate-bounce max-w-[calc(100%-1rem)] sm:max-w-sm md:max-w-md">
+        <div className="bg-red-600 text-white px-2.5 sm:px-4 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-lg shadow-2xl border-2 border-red-400 flex items-center gap-2 sm:gap-3">
+          <span className="text-lg sm:text-xl md:text-2xl animate-pulse flex-shrink-0">🚨</span>
+          <div className="flex-1 min-w-0">
+            <p className="font-bold text-xs sm:text-sm md:text-lg truncate">CRITICAL ALERT</p>
+            <p className="text-[10px] sm:text-xs md:text-sm truncate">Immediate action required</p>
           </div>
           <button
             onClick={handleDismiss}
-            className="ml-4 text-white hover:text-red-200 transition-colors text-xl font-bold"
+            className="ml-1 sm:ml-2 md:ml-4 text-white hover:text-red-200 transition-colors text-base sm:text-lg md:text-xl font-bold flex-shrink-0"
             aria-label="Dismiss alert"
           >
             ×

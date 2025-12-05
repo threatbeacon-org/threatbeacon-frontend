@@ -35,7 +35,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-3 sm:p-4 md:p-6 relative overflow-hidden">
       {/* Background Effects */}
       <ParticleBackground />
 
@@ -44,19 +44,21 @@ export default function LoginPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="relative z-10 w-full max-w-lg mx-auto"
+        className="relative z-10 w-full max-w-xs sm:max-w-md md:max-w-lg mx-auto"
       >
         {/* Login Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-4 sm:mb-6 md:mb-8 lg:mb-12">
           <LoginHeader />
         </div>
 
         {/* Cyber Robot */}
-        <div className="mb-12 flex justify-center">
-          <CyberRobot
-            isTypingUsername={isUsernameFocused || username.length > 0}
-            isTypingPassword={isPasswordFocused || password.length > 0}
-          />
+        <div className="mb-4 sm:mb-6 md:mb-8 lg:mb-12 flex justify-center">
+          <div className="scale-[0.6] sm:scale-75 md:scale-90 lg:scale-100">
+            <CyberRobot
+              isTypingUsername={isUsernameFocused || username.length > 0}
+              isTypingPassword={isPasswordFocused || password.length > 0}
+            />
+          </div>
         </div>
 
         {/* Login Card - Bottom Section */}
@@ -64,12 +66,12 @@ export default function LoginPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="bg-slate-900/80 backdrop-blur-sm border border-cyan-500/30 rounded-xl p-12"
+          className="bg-slate-900/80 backdrop-blur-sm border border-cyan-500/30 rounded-xl p-4 sm:p-6 md:p-8 lg:p-12 w-full"
           style={{
             boxShadow: '0 0 30px rgba(6, 182, 212, 0.15)',
           }}
         >
-          <form onSubmit={handleSubmit} className="space-y-10">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6 md:space-y-8 lg:space-y-10">
             {/* Username Input */}
             <CyberInput
               label="USUARIO"
@@ -103,9 +105,9 @@ export default function LoginPage() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="bg-red-600/20 border border-red-600/50 rounded-lg p-3"
+                className="bg-red-600/20 border border-red-600/50 rounded-lg p-2.5 sm:p-3"
               >
-                <p className="text-red-400 text-sm font-cyber-body">{error}</p>
+                <p className="text-red-400 text-xs sm:text-sm font-cyber-body break-words">{error}</p>
               </motion.div>
             )}
 
@@ -118,7 +120,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full relative overflow-hidden px-8 py-5 bg-cyan-500 hover:bg-cyan-600 text-white rounded-xl font-bold text-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed uppercase tracking-wider flex items-center justify-center gap-3"
+                className="w-full relative overflow-hidden px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 bg-cyan-500 hover:bg-cyan-600 text-white rounded-xl font-bold text-sm sm:text-base md:text-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed uppercase tracking-wider flex items-center justify-center gap-2 sm:gap-3"
                 style={{
                   boxShadow: '0 0 25px rgba(6, 182, 212, 0.6)',
                 }}
@@ -128,15 +130,16 @@ export default function LoginPage() {
                     <motion.span
                       animate={{ rotate: 360 }}
                       transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      className="text-base sm:text-lg md:text-xl"
                     >
                       ⚙️
                     </motion.span>
-                    Autenticando...
+                    <span className="text-xs sm:text-sm md:text-base">Autenticando...</span>
                   </>
                 ) : (
                   <>
-                    <span>🛡️</span>
-                    INICIAR SESIÓN
+                    <span className="text-base sm:text-lg md:text-xl">🛡️</span>
+                    <span className="text-xs sm:text-sm md:text-base">INICIAR SESIÓN</span>
                   </>
                 )}
                 {/* Shine effect */}
@@ -153,7 +156,7 @@ export default function LoginPage() {
                 />
               </button>
             </motion.div>
-          </form>
+      </form>
         </motion.div>
       </motion.div>
     </div>
