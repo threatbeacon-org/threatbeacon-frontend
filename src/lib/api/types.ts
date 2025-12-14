@@ -8,10 +8,7 @@ export type RiskLevel = 'NORMAL' | 'SUSPICIOUS' | 'CRITICAL';
 export interface RiskStatus {
   level: RiskLevel;
   buzzerMuted: boolean;
-  lastUpdated: string;
-  activeIncidents?: number;
-  criticalCount?: number;
-  suspiciousCount?: number;
+  timestamp: string;  // Backend uses 'timestamp' not 'lastUpdated'
 }
 
 export interface IncidentSummary {
@@ -35,8 +32,16 @@ export interface IncidentDetail {
 }
 
 export interface IncidentInsight {
-  insight: string;
-  generatedAt: string;
-  confidence?: number;
+  incidentId: number;
+  insightText: string;  // Backend uses 'insightText' not 'insight'
+}
+
+export interface EventData {
+  type: string;           // Tipo de evento (String, obligatorio)
+  source: string;         // Origen del evento (String, obligatorio)
+  ip: string;            // IP de origen (String, obligatorio)
+  country?: string;      // Código del país (String, opcional)
+  severity: string;      // Severidad del evento (String, obligatorio)
+  metadata?: string;     // Datos adicionales (String, opcional)
 }
 
