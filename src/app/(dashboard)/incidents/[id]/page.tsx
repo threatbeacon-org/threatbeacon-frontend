@@ -177,8 +177,6 @@ export default function IncidentDetailPage() {
             insight={insight?.insightText}
             isLoading={isLoadingInsight}
             isError={isErrorInsight}
-            generatedAt={insight?.generatedAt}
-            confidence={insight?.confidence}
           />
         </div>
       </div>
