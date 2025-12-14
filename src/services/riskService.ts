@@ -20,3 +20,10 @@ export async function muteBuzzer(): Promise<void> {
   return await apiClient.post<void>('/api/beacon/mute');
 }
 
+/**
+ * Stops the buzzer and resets system to normal
+ */
+export async function stopBuzzer(): Promise<void> {
+  return await apiClient.post<void>('/api/beacon/stop');
+}
+
