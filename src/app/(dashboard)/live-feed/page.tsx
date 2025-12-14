@@ -62,10 +62,10 @@ export default function LiveFeedPage() {
   };
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold text-white mb-2">Live Feed</h1>
+          <h1 className="text-2xl font-bold text-white mb-2">Live Feed</h1>
           <p className="text-slate-400">
             Real-time security events and alerts
           </p>
@@ -79,7 +79,7 @@ export default function LiveFeedPage() {
       </div>
 
       <Card title="Live Events" subtitle="Real-time security event stream">
-        <div className="space-y-3 max-h-96 overflow-y-auto">
+        <div className="space-y-4 max-h-96 overflow-y-auto">
           {events.length === 0 ? (
             <div className="text-center text-slate-400 py-8">
               <p>No events to display</p>
@@ -88,7 +88,7 @@ export default function LiveFeedPage() {
             events.map((event) => (
               <div
                 key={event.id}
-                className="flex items-start gap-3 p-3 bg-slate-900/50 rounded-lg border border-slate-700"
+                className="flex items-start gap-4 p-4 bg-slate-900/50 rounded-lg border border-slate-700"
               >
                 <div className="flex-shrink-0 mt-1">
                   <div className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse" />

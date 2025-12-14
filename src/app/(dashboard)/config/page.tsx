@@ -12,21 +12,21 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8
 
 export default function ConfigPage() {
   return (
-    <div className="space-y-3">
+    <div className="space-y-6">
       <div>
-        <h1 className="text-xl font-bold text-white mb-2">Configuration</h1>
+        <h1 className="text-2xl font-bold text-white mb-2">Configuration</h1>
         <p className="text-slate-400">
           Integration settings and SIEM connectivity information
         </p>
       </div>
 
       <Card title="API Endpoint" subtitle="Event ingestion endpoint for SIEM integration">
-        <div className="space-y-2">
+        <div className="space-y-4">
           <div>
             <label className="text-sm font-medium text-slate-400 block mb-2">
               POST Endpoint
             </label>
-            <div className="bg-slate-900 border border-slate-700 rounded-lg p-2">
+            <div className="bg-slate-900 border border-slate-700 rounded-lg p-4">
               <code className="text-cyan-400 font-mono text-sm break-all">
                 {API_BASE_URL}/api/events
               </code>
@@ -37,7 +37,7 @@ export default function ConfigPage() {
             <label className="text-sm font-medium text-slate-400 block mb-2">
               API Key (Example)
             </label>
-            <div className="bg-slate-900 border border-slate-700 rounded-lg p-2">
+            <div className="bg-slate-900 border border-slate-700 rounded-lg p-4">
               <code className="text-slate-300 font-mono text-sm">
                 tb_api_key_example_12345
               </code>
@@ -51,8 +51,8 @@ export default function ConfigPage() {
       </Card>
 
       <Card title="Beacon Status" subtitle="Active ThreatBeacon devices">
-        <div className="space-y-2">
-          <div className="flex items-center justify-between p-2 bg-slate-900/50 rounded-lg border border-slate-700">
+        <div className="space-y-4">
+          <div className="flex items-center justify-between p-4 bg-slate-900/50 rounded-lg border border-slate-700">
             <div>
               <h4 className="text-white font-medium">Beacon #1</h4>
               <p className="text-sm text-slate-400">Main SOC Room</p>
@@ -60,7 +60,7 @@ export default function ConfigPage() {
             <Badge variant="success">Online</Badge>
           </div>
 
-          <div className="flex items-center justify-between p-2 bg-slate-900/50 rounded-lg border border-slate-700">
+          <div className="flex items-center justify-between p-4 bg-slate-900/50 rounded-lg border border-slate-700">
             <div>
               <h4 className="text-white font-medium">Beacon #2</h4>
               <p className="text-sm text-slate-400">Secondary Monitoring Station</p>
@@ -74,7 +74,7 @@ export default function ConfigPage() {
         title="SIEM Integration Guide"
         subtitle="How to forward events from your SIEM to ThreatBeacon"
       >
-        <div className="prose prose-invert max-w-none space-y-2">
+        <div className="prose prose-invert max-w-none space-y-4">
           <p className="text-slate-300">
             To integrate ThreatBeacon with your existing SIEM solution, configure your
             SIEM to forward selected security events to ThreatBeacon API endpoint.
@@ -99,7 +99,7 @@ export default function ConfigPage() {
             </ol>
           </div>
 
-          <div className="bg-cyan-600/10 border border-cyan-600/30 rounded-lg p-2 mt-2">
+          <div className="bg-cyan-600/10 border border-cyan-600/30 rounded-lg p-4 mt-4">
             <p className="text-cyan-400 text-sm">
               <strong>Note:</strong> Full API key authentication and event schema
               documentation will be available in a future release. For now, ThreatBeacon

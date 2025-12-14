@@ -86,11 +86,11 @@ export default function IncidentTable() {
   return (
     <div className="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden w-full shadow-lg transition-all duration-300 hover:shadow-xl">
       {/* Header */}
-      <div className="p-3 border-b border-slate-700">
+      <div className="p-4 border-b border-slate-700">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <div className="w-2 h-2 bg-cyan-500 rounded-full flex-shrink-0"></div>
-            <h3 className="text-sm font-semibold text-white">Active Incidents</h3>
+            <h3 className="text-lg font-semibold text-white">Active Incidents</h3>
             <Badge variant="neutral" size="sm" className="bg-slate-700/50 text-slate-300 border-slate-600/50 text-xs">
               {incidents.length} TOTAL
             </Badge>
