@@ -5,20 +5,16 @@
  * Allows users to mute the buzzer when risk level is not NORMAL
  */
 
-import React, { useState } from 'react';
-import { muteBuzzer, stopBuzzer } from '@/services/riskService';
-import { useRiskStatus } from '@/hooks/useRiskStatus';
+import { useRiskStatus } from "@/hooks/useRiskStatus";
+import { muteBuzzer, stopBuzzer } from "@/services/riskService";
+import { useState } from "react";
 
 export default function MuteBuzzerButton() {
   const { riskStatus, refresh } = useRiskStatus();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  if (!riskStatus || riskStatus.level === 'NORMAL') {
-    return null;
-  }
-
-  if (riskStatus.buzzerMuted) {
+  if (!riskStatus || riskStatus.buzzerMuted) {
     return (
       <div className="flex items-center gap-1.5 sm:gap-2 text-orange-400">
         <span className="text-sm sm:text-base">🔇</span>
@@ -34,7 +30,7 @@ export default function MuteBuzzerButton() {
       await muteBuzzer();
       await refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to mute buzzer');
+      setError(err instanceof Error ? err.message : "Failed to mute buzzer");
     } finally {
       setIsLoading(false);
     }
@@ -47,7 +43,7 @@ export default function MuteBuzzerButton() {
       await stopBuzzer();
       await refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to stop buzzer');
+      setError(err instanceof Error ? err.message : "Failed to stop buzzer");
     } finally {
       setIsLoading(false);
     }
@@ -63,7 +59,7 @@ export default function MuteBuzzerButton() {
         <span className="text-sm sm:text-base">🔇</span>
         <span className="whitespace-nowrap">MUTE BUZZER</span>
       </button>
-      
+
       <button
         onClick={handleStop}
         disabled={isLoading}
@@ -75,4 +71,3 @@ export default function MuteBuzzerButton() {
     </div>
   );
 }
-

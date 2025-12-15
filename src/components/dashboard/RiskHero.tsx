@@ -5,48 +5,53 @@
  * Global Risk Level display matching the design image exactly
  */
 
-import React from 'react';
-import { useRiskStatus } from '@/hooks/useRiskStatus';
-import { useIncidents } from '@/hooks/useIncidents';
-import type { RiskLevel } from '@/lib/api/types';
-import MuteBuzzerButton from './MuteBuzzerButton';
+import { useIncidents } from "@/hooks/useIncidents";
+import { useRiskStatus } from "@/hooks/useRiskStatus";
+import type { RiskLevel } from "@/lib/api/types";
+import MuteBuzzerButton from "./MuteBuzzerButton";
 
 function getRiskLevelConfig(level: RiskLevel) {
   switch (level) {
-    case 'NORMAL':
+    case "NORMAL":
       return {
-        iconBg: 'bg-green-600',
-        icon: '✓',
-        textColor: 'text-green-400',
-        label: 'NORMAL',
+        iconBg: "bg-green-600",
+        icon: "✓",
+        textColor: "text-green-400",
+        label: "NORMAL",
       };
-    case 'SUSPICIOUS':
+    case "SUSPICIOUS":
       return {
-        iconBg: 'bg-orange-600',
-        icon: '⚠️',
-        textColor: 'text-orange-400',
-        label: 'SUSPICIOUS',
+        iconBg: "bg-orange-600",
+        icon: "⚠️",
+        textColor: "text-orange-400",
+        label: "SUSPICIOUS",
       };
-    case 'CRITICAL':
+    case "CRITICAL":
       return {
-        iconBg: 'bg-red-600',
-        icon: '🛡️',
-        textColor: 'text-red-400',
-        label: 'CRITICAL THREAT',
+        iconBg: "bg-red-600",
+        icon: "🛡️",
+        textColor: "text-red-400",
+        label: "CRITICAL THREAT",
       };
     default:
       return {
-        iconBg: 'bg-slate-600',
-        icon: '?',
-        textColor: 'text-slate-400',
-        label: 'UNKNOWN',
+        iconBg: "bg-slate-600",
+        icon: "?",
+        textColor: "text-slate-400",
+        label: "UNKNOWN",
       };
   }
 }
 
 export default function RiskHero() {
-  const { riskStatus, isLoading: isLoadingRisk, isError: isErrorRisk } = useRiskStatus();
+  const {
+    riskStatus,
+    isLoading: isLoadingRisk,
+    isError: isErrorRisk,
+  } = useRiskStatus();
   const { incidents, isLoading: isLoadingIncidents } = useIncidents();
+
+  console.log(incidents);
 
   if (isLoadingRisk) {
     return (
@@ -60,7 +65,9 @@ export default function RiskHero() {
   if (isErrorRisk || !riskStatus) {
     return (
       <div className="bg-slate-800 border border-red-700 rounded-xl p-6">
-        <h2 className="text-2xl font-bold text-red-400 mb-2">Error Loading Risk Status</h2>
+        <h2 className="text-2xl font-bold text-red-400 mb-2">
+          Error Loading Risk Status
+        </h2>
         <p className="text-slate-400">Unable to fetch current risk level</p>
       </div>
     );
@@ -70,11 +77,11 @@ export default function RiskHero() {
 
   // Calculate statistics from incidents
   const activeCount = incidents.length;
-  const criticalCount = incidents.filter((i) => i.severity === 'CRITICAL').length;
-  const suspiciousCount = incidents.filter((i) => 
-    i.severity === 'HIGH' || 
-    i.severity === 'MEDIUM' ||
-    i.type.toLowerCase().includes('suspicious')
+
+  const criticalCount = incidents.filter((i) => i.severity === "HIGH").length;
+  const suspiciousCount = incidents.filter(
+    (i) =>
+      i.severity === "MEDIUM" || i.type.toLowerCase().includes("suspicious")
   ).length;
 
   return (
@@ -104,7 +111,9 @@ export default function RiskHero() {
 
         {/* Risk Level Text */}
         <div className="flex-1 text-center lg:text-left">
-          <div className={`text-3xl lg:text-4xl font-bold ${config.textColor} mb-2`}>
+          <div
+            className={`text-3xl lg:text-4xl font-bold ${config.textColor} mb-2`}
+          >
             {config.label}
           </div>
           <div className="text-slate-400 text-xs">
@@ -124,21 +133,27 @@ export default function RiskHero() {
           <div className="text-xl font-bold text-blue-400 mb-1">
             {activeCount}
           </div>
-          <div className="text-xs text-slate-400 uppercase tracking-wider">ACTIVE</div>
+          <div className="text-xs text-slate-400 uppercase tracking-wider">
+            ACTIVE
+          </div>
         </div>
-        
+
         <div className="bg-slate-900/50 rounded-lg p-3 border border-slate-600/50 min-w-[140px] transition-all duration-200 hover:border-slate-600 hover:bg-slate-900/70">
           <div className="text-xl font-bold text-red-400 mb-1">
             {criticalCount}
           </div>
-          <div className="text-xs text-slate-400 uppercase tracking-wider">CRITICAL</div>
+          <div className="text-xs text-slate-400 uppercase tracking-wider">
+            CRITICAL
+          </div>
         </div>
-        
+
         <div className="bg-slate-900/50 rounded-lg p-3 border border-slate-600/50 min-w-[140px] transition-all duration-200 hover:border-slate-600 hover:bg-slate-900/70">
           <div className="text-xl font-bold text-orange-400 mb-1">
             {suspiciousCount}
           </div>
-          <div className="text-xs text-slate-400 uppercase tracking-wider">SUSPICIOUS</div>
+          <div className="text-xs text-slate-400 uppercase tracking-wider">
+            SUSPICIOUS
+          </div>
         </div>
       </div>
     </div>
