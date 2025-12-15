@@ -23,6 +23,7 @@ export function useRiskStatus() {
   const transformedData: RiskStatus | null = data ? {
     level: data.level,
     buzzerMuted: data.buzzerMuted,
+    timestamp: data.timestamp,
     lastUpdated: data.timestamp, // Map timestamp to lastUpdated for existing components
   } : null;
 
