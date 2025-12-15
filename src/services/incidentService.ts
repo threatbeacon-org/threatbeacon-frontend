@@ -32,6 +32,6 @@ export async function fetchIncidentDetail(id: number): Promise<IncidentDetail> {
 export async function fetchIncidentInsight(
   id: number
 ): Promise<IncidentInsight> {
-  return await apiClient.get<IncidentInsight>(`/api/incidents/${id}/insight`);
+  return await apiClient.get<IncidentInsight>(`/api/incidents/${id}/insights`);
 }
 
