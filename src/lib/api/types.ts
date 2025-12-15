@@ -34,6 +34,8 @@ export interface IncidentDetail {
 export interface IncidentInsight {
   incidentId: number;
   insightText: string;  // Backend uses 'insightText' not 'insight'
+  insight?: string;     // Alias for UI compatibility (maps to insightText)
+  confidence?: number;  // Confidence score (0-100) - optional, defaults to 94 in UI
 }
 
 export interface EventData {
