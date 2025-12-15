@@ -1,18 +1,18 @@
 "use client";
 
-import React, { useState, FormEvent } from 'react';
-import { useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
-import { login } from '@/services/authService';
-import CyberRobot from '@/components/login/CyberRobot';
-import ParticleBackground from '@/components/login/ParticleBackground';
-import CyberInput from '@/components/login/CyberInput';
-import LoginHeader from '@/components/login/LoginHeader';
+import CyberInput from "@/components/login/CyberInput";
+import CyberRobot from "@/components/login/CyberRobot";
+import LoginHeader from "@/components/login/LoginHeader";
+import ParticleBackground from "@/components/login/ParticleBackground";
+import { login } from "@/services/authService";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isUsernameFocused, setIsUsernameFocused] = useState(false);
@@ -25,10 +25,10 @@ export default function LoginPage() {
 
     try {
       await login(username, password);
-      await new Promise(resolve => setTimeout(resolve, 500));
-      router.push('/overview');
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      router.push("/overview");
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Invalid credentials');
+      setError(err instanceof Error ? err.message : "Invalid credentials");
     } finally {
       setIsLoading(false);
     }
@@ -66,12 +66,12 @@ export default function LoginPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="bg-slate-900/80 backdrop-blur-sm border border-cyan-500/30 rounded-xl p-4 sm:p-6 md:p-8 lg:p-12 w-full"
-          style={{
-            boxShadow: '0 0 30px rgba(6, 182, 212, 0.15)',
-          }}
+          className="w-full"
         >
-          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6 md:space-y-8 lg:space-y-10">
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-4 sm:space-y-6 md:space-y-8 lg:space-y-10"
+          >
             {/* Username Input */}
             <CyberInput
               label="USUARIO"
@@ -107,7 +107,9 @@ export default function LoginPage() {
                 animate={{ opacity: 1, scale: 1 }}
                 className="bg-red-600/20 border border-red-600/50 rounded-lg p-2.5 sm:p-3"
               >
-                <p className="text-red-400 text-xs sm:text-sm font-cyber-body break-words">{error}</p>
+                <p className="text-red-400 text-xs sm:text-sm font-cyber-body wrap-break-word">
+                  {error}
+                </p>
               </motion.div>
             )}
 
@@ -122,31 +124,39 @@ export default function LoginPage() {
                 disabled={isLoading}
                 className="w-full relative overflow-hidden px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 bg-cyan-500 hover:bg-cyan-600 text-white rounded-xl font-bold text-sm sm:text-base md:text-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed uppercase tracking-wider flex items-center justify-center gap-2 sm:gap-3"
                 style={{
-                  boxShadow: '0 0 25px rgba(6, 182, 212, 0.6)',
+                  boxShadow: "0 0 25px rgba(6, 182, 212, 0.6)",
                 }}
               >
                 {isLoading ? (
                   <>
                     <motion.span
                       animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      transition={{
+                        duration: 1,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
                       className="text-base sm:text-lg md:text-xl"
                     >
                       ⚙️
                     </motion.span>
-                    <span className="text-xs sm:text-sm md:text-base">Autenticando...</span>
+                    <span className="text-xs sm:text-sm md:text-base">
+                      Autenticando...
+                    </span>
                   </>
                 ) : (
                   <>
                     <span className="text-base sm:text-lg md:text-xl">🛡️</span>
-                    <span className="text-xs sm:text-sm md:text-base">INICIAR SESIÓN</span>
+                    <span className="text-xs sm:text-sm md:text-base">
+                      INICIAR SESIÓN
+                    </span>
                   </>
                 )}
                 {/* Shine effect */}
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                  className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent"
                   animate={{
-                    x: ['-100%', '100%'],
+                    x: ["-100%", "100%"],
                   }}
                   transition={{
                     duration: 2,
@@ -156,7 +166,7 @@ export default function LoginPage() {
                 />
               </button>
             </motion.div>
-      </form>
+          </form>
         </motion.div>
       </motion.div>
     </div>
