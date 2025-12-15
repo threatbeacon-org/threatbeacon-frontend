@@ -9,6 +9,7 @@ export interface RiskStatus {
   level: RiskLevel;
   buzzerMuted: boolean;
   timestamp: string;  // Backend uses 'timestamp' not 'lastUpdated'
+  lastUpdated?: string;  // Optional alias for UI compatibility (maps to timestamp)
 }
 
 export interface IncidentSummary {
