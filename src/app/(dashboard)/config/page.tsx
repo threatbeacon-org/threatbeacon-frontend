@@ -13,7 +13,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8
 export default function ConfigPage() {
   return (
     <div className="space-y-6">
-      <div>
+      <div className="ml-1">
         <h1 className="text-2xl font-bold text-white mb-2">Configuration</h1>
         <p className="text-slate-400">
           Integration settings and SIEM connectivity information

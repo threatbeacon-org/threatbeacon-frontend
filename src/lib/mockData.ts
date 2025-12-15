@@ -8,10 +8,8 @@ import type { RiskStatus, IncidentSummary, IncidentDetail, IncidentInsight } fro
 export const mockRiskStatus: RiskStatus = {
   level: 'CRITICAL',
   buzzerMuted: false,
+  timestamp: new Date().toISOString(),
   lastUpdated: new Date().toISOString(),
-  activeIncidents: 5,
-  criticalCount: 2,
-  suspiciousCount: 3,
 };
 
 export const mockIncidents: IncidentSummary[] = [
@@ -51,8 +49,9 @@ export const mockIncidentDetail: IncidentDetail = {
 };
 
 export const mockIncidentInsight: IncidentInsight = {
+  incidentId: 1,
+  insightText: 'Network anomaly detected in internal traffic patterns. Unusual communication between internal systems identified. Monitor for potential misconfiguration or unauthorized access attempts.',
   insight: 'Network anomaly detected in internal traffic patterns. Unusual communication between internal systems identified. Monitor for potential misconfiguration or unauthorized access attempts.',
-  generatedAt: new Date().toISOString(),
   confidence: 78,
 };
 
