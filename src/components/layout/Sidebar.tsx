@@ -39,7 +39,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
   };
 
   return (
-    <aside className="w-56 sm:w-64 bg-slate-900 border-r border-slate-700 min-h-screen flex flex-col z-50">
+    <aside className="fixed w-full w-56 sm:w-64 bg-slate-900 border-r border-slate-700 min-h-screen flex flex-col z-50">
       {/* Logo Section */}
       <div className="p-3 sm:p-4 md:p-6 border-b border-slate-700 flex items-center justify-between">
         <div className="flex items-center gap-2 sm:gap-3">
