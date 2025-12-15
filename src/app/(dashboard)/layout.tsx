@@ -5,11 +5,11 @@
  * Common layout for all dashboard routes with authentication check
  */
 
-import React, { useEffect, useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
-import { isAuthenticated } from '@/lib/api/client';
-import Navbar from '@/components/layout/Navbar';
-import Sidebar from '@/components/layout/Sidebar';
+import Navbar from "@/components/layout/Navbar";
+import Sidebar from "@/components/layout/Sidebar";
+import { isAuthenticated } from "@/lib/api/client";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
 export default function DashboardLayout({
   children,
@@ -29,8 +29,8 @@ export default function DashboardLayout({
       setIsAuth(authenticated);
       setIsCheckingAuth(false);
 
-      if (!authenticated && pathname !== '/login') {
-        router.push('/login');
+      if (!authenticated && pathname !== "/login") {
+        router.push("/login");
       }
     };
 
@@ -39,7 +39,7 @@ export default function DashboardLayout({
 
   // Close sidebar when route changes on mobile
   useEffect(() => {
-    setSidebarOpen(false);
+    setSidebarOpen(false); // ERRORSOTE
   }, [pathname]);
 
   // Show loading state while checking auth (prevents hydration mismatch)
@@ -66,11 +66,11 @@ export default function DashboardLayout({
       <div className="hidden lg:block w-60 flex-shrink-0">
         <Sidebar />
       </div>
-      
+
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <>
-          <div 
+          <div
             className="fixed inset-0 bg-black/50 z-40 lg:hidden"
             onClick={() => setSidebarOpen(false)}
           />
@@ -83,9 +83,7 @@ export default function DashboardLayout({
       <div className="flex-1 flex flex-col min-w-0">
         <Navbar onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
         <main className="flex-1 p-6 overflow-auto">
-          <div className="max-w-full">
-            {children}
-          </div>
+          <div className="max-w-full">{children}</div>
         </main>
       </div>
     </div>
