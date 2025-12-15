@@ -5,9 +5,9 @@
  * Allows users to mute the buzzer when risk level is not NORMAL
  */
 
-import React, { useState } from 'react';
-import { muteBuzzer, stopBuzzer } from '@/services/riskService';
-import { useRiskStatus } from '@/hooks/useRiskStatus';
+import { useRiskStatus } from "@/hooks/useRiskStatus";
+import { muteBuzzer, stopBuzzer } from "@/services/riskService";
+import { useState } from "react";
 
 export default function MuteBuzzerButton() {
   const { riskStatus, refresh } = useRiskStatus();
@@ -25,7 +25,7 @@ export default function MuteBuzzerButton() {
       await muteBuzzer();
       await refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to mute buzzer');
+      setError(err instanceof Error ? err.message : "Failed to mute buzzer");
     } finally {
       setIsLoading(false);
     }
@@ -45,4 +45,3 @@ export default function MuteBuzzerButton() {
     </div>
   );
 }
-

@@ -5,8 +5,8 @@
  * Animated robot matching the design: helmet shape, eyes follow cursor, hands cover eyes
  */
 
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, useAnimation } from 'framer-motion';
+import { motion, useAnimation } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 interface CyberRobotProps {
   isTypingUsername: boolean;
@@ -34,7 +34,7 @@ export default function CyberRobot({
       if (robotRef.current && isTypingUsername) {
         const rect = robotRef.current.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
-        
+
         // Calculate relative position (limit movement)
         const deltaX = (e.clientX - centerX) / 50;
         setEyeOffsetX(Math.max(-8, Math.min(8, deltaX)));
@@ -44,8 +44,8 @@ export default function CyberRobot({
     };
 
     if (isTypingUsername) {
-      window.addEventListener('mousemove', handleMouseMove);
-      return () => window.removeEventListener('mousemove', handleMouseMove);
+      window.addEventListener("mousemove", handleMouseMove);
+      return () => window.removeEventListener("mousemove", handleMouseMove);
     } else {
       setEyeOffsetX(0);
     }
@@ -59,17 +59,17 @@ export default function CyberRobot({
         x: 30,
         y: -60,
         rotate: 45,
-        transition: { type: "spring", stiffness: 200, damping: 15 }
+        transition: { type: "spring", stiffness: 200, damping: 15 },
       });
       rightHandControls.start({
         x: -30,
         y: -60,
         rotate: -45,
-        transition: { type: "spring", stiffness: 200, damping: 15 }
+        transition: { type: "spring", stiffness: 200, damping: 15 },
       });
       eyeControls.start({
         scaleY: 0.1,
-        transition: { duration: 0.2 }
+        transition: { duration: 0.2 },
       });
     } else {
       // Reset hands
@@ -77,17 +77,17 @@ export default function CyberRobot({
         x: 0,
         y: 0,
         rotate: 0,
-        transition: { type: "spring", stiffness: 200, damping: 15 }
+        transition: { type: "spring", stiffness: 200, damping: 15 },
       });
       rightHandControls.start({
         x: 0,
         y: 0,
         rotate: 0,
-        transition: { type: "spring", stiffness: 200, damping: 15 }
+        transition: { type: "spring", stiffness: 200, damping: 15 },
       });
       eyeControls.start({
         scaleY: 1,
-        transition: { duration: 0.2 }
+        transition: { duration: 0.2 },
       });
     }
   }, [isTypingPassword, leftHandControls, rightHandControls, eyeControls]);
@@ -97,12 +97,12 @@ export default function CyberRobot({
     if (isTypingUsername) {
       antennaControls.start({
         rotate: [0, -10, 10, -5, 5, 0],
-        transition: { duration: 0.5, repeat: Infinity, repeatDelay: 1 }
+        transition: { duration: 0.5, repeat: Infinity, repeatDelay: 1 },
       });
     } else {
       antennaControls.start({
         rotate: 0,
-        transition: { duration: 0.3 }
+        transition: { duration: 0.3 },
       });
     }
   }, [isTypingUsername, antennaControls]);
@@ -114,7 +114,7 @@ export default function CyberRobot({
         className="absolute inset-0 rounded-full bg-cyan-500/20 blur-3xl"
         animate={{
           scale: [1, 1.1, 1],
-          opacity: [0.3, 0.5, 0.3]
+          opacity: [0.3, 0.5, 0.3],
         }}
         transition={{ duration: 2, repeat: Infinity }}
       />
@@ -123,16 +123,19 @@ export default function CyberRobot({
         {/* Definitions for glow effect */}
         <defs>
           <filter id="glow">
-            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feGaussianBlur stdDeviation="3" result="coloredBlur" />
             <feMerge>
-              <feMergeNode in="coloredBlur"/>
-              <feMergeNode in="SourceGraphic"/>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
         </defs>
 
         {/* Antenna */}
-        <motion.g animate={antennaControls} style={{ transformOrigin: "100px 40px" }}>
+        <motion.g
+          animate={antennaControls}
+          style={{ transformOrigin: "100px 40px" }}
+        >
           <line
             x1="100"
             y1="40"
@@ -162,13 +165,17 @@ export default function CyberRobot({
           fill="#1e293b"
           stroke="#06b6d4"
           strokeWidth="2"
-          animate={isTypingUsername || isTypingPassword ? {
-            filter: [
-              "drop-shadow(0 0 10px rgba(6, 182, 212, 0.3))",
-              "drop-shadow(0 0 20px rgba(6, 182, 212, 0.5))",
-              "drop-shadow(0 0 10px rgba(6, 182, 212, 0.3))"
-            ]
-          } : {}}
+          animate={
+            isTypingUsername || isTypingPassword
+              ? {
+                  filter: [
+                    "drop-shadow(0 0 10px rgba(6, 182, 212, 0.3))",
+                    "drop-shadow(0 0 20px rgba(6, 182, 212, 0.5))",
+                    "drop-shadow(0 0 10px rgba(6, 182, 212, 0.3))",
+                  ],
+                }
+              : {}
+          }
           transition={{ duration: 0.5, repeat: Infinity }}
           filter="url(#glow)"
         />
@@ -196,8 +203,8 @@ export default function CyberRobot({
               filter: [
                 "drop-shadow(0 0 5px rgba(6, 182, 212, 0.8))",
                 "drop-shadow(0 0 10px rgba(6, 182, 212, 1))",
-                "drop-shadow(0 0 5px rgba(6, 182, 212, 0.8))"
-              ]
+                "drop-shadow(0 0 5px rgba(6, 182, 212, 0.8))",
+              ],
             }}
             transition={{ duration: 1.5, repeat: Infinity }}
           />
@@ -226,8 +233,8 @@ export default function CyberRobot({
               filter: [
                 "drop-shadow(0 0 5px rgba(6, 182, 212, 0.8))",
                 "drop-shadow(0 0 10px rgba(6, 182, 212, 1))",
-                "drop-shadow(0 0 5px rgba(6, 182, 212, 0.8))"
-              ]
+                "drop-shadow(0 0 5px rgba(6, 182, 212, 0.8))",
+              ],
             }}
             transition={{ duration: 1.5, repeat: Infinity }}
           />
@@ -257,10 +264,14 @@ export default function CyberRobot({
               rx="1.5"
               fill="#06b6d4"
               opacity={0.6}
-              animate={isTypingUsername ? {
-                opacity: [0.3, 0.8, 0.3],
-                scaleX: [1, 1.1, 1]
-              } : {}}
+              animate={
+                isTypingUsername
+                  ? {
+                      opacity: [0.3, 0.8, 0.3],
+                      scaleX: [1, 1.1, 1],
+                    }
+                  : {}
+              }
               transition={{ duration: 0.3, delay: i * 0.1, repeat: Infinity }}
             />
           ))}
@@ -290,14 +301,17 @@ export default function CyberRobot({
             filter: [
               "drop-shadow(0 0 5px rgba(0, 255, 138, 0.8))",
               "drop-shadow(0 0 15px rgba(0, 255, 138, 1))",
-              "drop-shadow(0 0 5px rgba(0, 255, 138, 0.8))"
-            ]
+              "drop-shadow(0 0 5px rgba(0, 255, 138, 0.8))",
+            ],
           }}
           transition={{ duration: 2, repeat: Infinity }}
         />
 
         {/* Left Arm */}
-        <motion.g animate={leftHandControls} style={{ transformOrigin: "55px 160px" }}>
+        <motion.g
+          animate={leftHandControls}
+          style={{ transformOrigin: "55px 160px" }}
+        >
           <motion.rect
             x="35"
             y="155"
@@ -322,7 +336,10 @@ export default function CyberRobot({
         </motion.g>
 
         {/* Right Arm */}
-        <motion.g animate={rightHandControls} style={{ transformOrigin: "145px 160px" }}>
+        <motion.g
+          animate={rightHandControls}
+          style={{ transformOrigin: "145px 160px" }}
+        >
           <motion.rect
             x="140"
             y="155"

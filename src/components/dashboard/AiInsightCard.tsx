@@ -5,8 +5,8 @@
  * Displays AI-generated threat analysis and insights
  */
 
-import React from 'react';
-import Card from '@/components/ui/Card';
+import Card from "@/components/ui/Card";
+import MarkdownRenderer from "../md/MarkdownRenderer";
 
 export interface AiInsightCardProps {
   insight?: string;
@@ -39,7 +39,9 @@ export default function AiInsightCard({
     return (
       <Card title="AI Threat Analysis">
         <div className="text-red-400">
-          <p className="text-xs sm:text-sm break-words">Unable to load AI insight. Please try again later.</p>
+          <p className="text-xs sm:text-sm break-words">
+            Unable to load AI insight. Please try again later.
+          </p>
         </div>
       </Card>
     );
@@ -49,7 +51,9 @@ export default function AiInsightCard({
     return (
       <Card title="AI Threat Analysis">
         <div className="text-slate-400">
-          <p className="text-xs sm:text-sm break-words">No AI insight available for this incident.</p>
+          <p className="text-xs sm:text-sm break-words">
+            No AI insight available for this incident.
+          </p>
         </div>
       </Card>
     );
@@ -65,8 +69,8 @@ export default function AiInsightCard({
       }
     >
       <div className="prose prose-invert max-w-none">
-        <p className="text-xs sm:text-sm md:text-base text-slate-300 leading-relaxed whitespace-pre-wrap break-words">
-          {insight}
+        <p className="text-xs sm:text-sm md:text-base text-slate-300 leading-relaxed whitespace-pre-wrap wrap-break-word">
+          <MarkdownRenderer keepOpen content={insight} />
         </p>
         {confidence !== undefined && (
           <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-slate-700">
